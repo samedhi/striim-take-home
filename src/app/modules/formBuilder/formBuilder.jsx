@@ -54,6 +54,21 @@ export default function FormBuilder({ formData }) {
                          </label>
                      ))}
                    </div>;
+        case 'select':
+        case 'multiSelect':
+            const multi = field.type === 'multiSelect';
+            return <select
+                     multiple={multi}
+                     name={field.name}
+                     value={formValues[field.name] || multi ? [] : ''}
+                     onChange={(e) => setFieldValue(field.name,
+                                                    Array.from(e.target.selectedOptions, option => option.value))}
+                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+                   >
+                     {field.options.map(option => (
+                         <option key={option} value={option}>{option}</option>
+                     ))}
+                   </select>;
         default:
             return <div style={{"background-color": "pink"}}>DEFAULT { field.name } DEFAULT</div>;
         }
