@@ -36,7 +36,7 @@ export default function Home() {
                 type: "multiSelect",
                 name: "proficiency",
                 label: "Which languages are you proficient in?",
-                options: ["Javascript", "Java", "Python", "CSS", "SQL"],
+                options: ["Javascript", "Java", "Python", "CSS", "SQL", "Other(s)"],
             },
             {
                 type: "multiSelect",
