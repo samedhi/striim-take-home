@@ -36,7 +36,7 @@ export default function Home() {
                 type: "multiSelect",
                 name: "proficiency",
                 label: "Which languages are you proficient in?",
-                options: ["Javascript", "Java", "Python", "CSS", "SQL", "None of them"],
+                options: ["Javascript", "Java", "Python", "CSS", "SQL"],
             },
             {
                 type: "multiSelect",
@@ -48,7 +48,6 @@ export default function Home() {
                     "Wednesday",
                     "Thursday",
                     "Friday",
-                    "Never",
                 ],
             },
             {
