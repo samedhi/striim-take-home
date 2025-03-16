@@ -69,6 +69,10 @@ export default function Home() {
         },
     };
 
+    if( (new Set(formData.fields.map(field => field.name))).size !== formData.fields.length) {
+        console.error("Duplicate fields detected:", formData.fields.map(field => field.name));
+    }
+
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
           <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
