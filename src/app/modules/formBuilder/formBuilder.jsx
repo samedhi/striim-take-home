@@ -92,13 +92,16 @@ export default function FormBuilder({ formData }) {
     return <form onSubmit={submit} className="w-full max-w-lg space-y-6">
              {formData.fields.map(field => (
                  <div key={field.name} className="space-y-2">
-                   <label>{field.label}</label>
+                   <label className="block font-medium text-gray-700">{field.label}</label>
                    {renderField(field)}
                    {errors[field.name] && (
                        <p className="text-red-500 text-sm">{errors[field.name]}</p>
                    )}
                  </div>
              ))}
-             <button type="submit">Submit</button>
+             <button type="submit"
+                     className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition">
+               Submit
+             </button>
            </form>;
 }
