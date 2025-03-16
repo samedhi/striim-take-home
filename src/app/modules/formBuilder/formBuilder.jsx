@@ -55,20 +55,34 @@ export default function FormBuilder({ formData }) {
                      ))}
                    </div>;
         case 'select':
+            return (
+                <select
+                  name={field.name}
+                  value={formValues[field.name] || ''}
+                  onChange={(e) => setFieldValue(field.name, e.target.value)}
+                  className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select an option</option>
+                  {field.options.map(option => (
+                      <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+            );
         case 'multiSelect':
-            const multi = field.type === 'multiSelect';
-            return <select
-                     multiple={multi}
-                     name={field.name}
-                     value={formValues[field.name] || multi ? [] : ''}
-                     onChange={(e) => setFieldValue(field.name,
-                                                    Array.from(e.target.selectedOptions, option => option.value))}
-                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
-                   >
-                     {field.options.map(option => (
-                         <option key={option} value={option}>{option}</option>
-                     ))}
-                   </select>;
+            return (
+                <select
+                  multiple
+                  name={field.name}
+                  value={formValues[field.name] || []}
+                  onChange={(e) => setFieldValue(field.name, 
+                                                 Array.from(e.target.selectedOptions, option => option.value))}
+                  className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+                >
+                  {field.options.map(option => (
+                      <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+            );
         default:
             return <div style={{"background-color": "pink"}}>DEFAULT { field.name } DEFAULT</div>;
         }
