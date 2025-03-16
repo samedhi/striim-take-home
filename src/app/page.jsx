@@ -1,6 +1,8 @@
+'use client'
+
 import Image from "next/image";
 import FormBuilder from "./modules/formBuilder/formBuilder";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Home() {
     /**
