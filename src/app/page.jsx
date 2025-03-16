@@ -12,6 +12,8 @@ export default function Home() {
        The form allows the user to provide details such as their name, proficiency in programming languages,
        availability to work in the office, and more.
     */
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const formData = {
         fields: [
             {
@@ -56,8 +58,15 @@ export default function Home() {
                 options: ["Mac", "Windows", "Linux"],
             },
         ],
-        onSubmit: function (formValues) {
-            console.log("On Save, formValues:", formValues);
+        onSubmit: async function (formValues) {
+            try {
+                setIsSubmitting(true);
+                console.log("On Save, formValues:", formValues);
+                // Fake an API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            } finally {
+                setIsSubmitting(false);
+            }
         },
     };
 
@@ -65,7 +74,7 @@ export default function Home() {
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
           <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
             <h3>Below renders the form builder</h3>
-            <FormBuilder formData={formData}/>
+            <FormBuilder formData={formData} isSubmitting={isSubmitting}/>
           </main>
         </div>
     );
