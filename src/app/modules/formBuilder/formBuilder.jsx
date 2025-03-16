@@ -84,7 +84,8 @@ export default function FormBuilder({ formData }) {
                 </select>
             );
         default:
-            return <div style={{"background-color": "pink"}}>DEFAULT { field.name } DEFAULT</div>;
+            console.error("Error: Unknown field type:", field);
+            return null;
         }
     };
 
