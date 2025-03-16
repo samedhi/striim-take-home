@@ -4,6 +4,23 @@ import React, { useState } from 'react';
 
 export default function FormBuilder({ formData }) {
     const [formValues, setFormValues] = useState({});
+    const [errors, setErrors] = useState({});
+
+    const submit = (e) => {
+        e.preventDefault();
+        const newErrors = {};
+        formData.fields.forEach(field => {
+            if (!formValues[field.name]) {
+                newErrors[field.name] = 'This field required';
+            }
+        });
+
+        if (Object.keys(newErrors).length === 0) {
+            formData.onSubmit(formValues);
+        } else {
+            setErrors(newErrors);
+        }
+    };
 
     const setFieldValue = (name, value) => {
         setFormValues(prev => ({...prev, [name]: value}));
@@ -16,25 +33,40 @@ export default function FormBuilder({ formData }) {
     const renderField = (field) => {
         switch (field.type) {
         case 'text':
-            return (
-                <input
-                  type="text"
-                  name={field.name}
-                  value={formValues[field.name] || ''}
-                  onChange={(e) => setFieldValue(field.name, e.target.value)}
-                  className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
-                />
-            );
+            return <input
+                     type="text"
+                     name={field.name}
+                     value={formValues[field.name] || ''}
+                     onChange={(e) => setFieldValue(field.name, e.target.value)}
+                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+                   />;
+        case 'checkbox':
+            return <div className="flex gap-4">
+                     {field.options.map(option => (
+                         <label key={option} className="flex gap-2">
+                           <input
+                             type="checkbox"
+                             checked={formValues[field.name] === option}
+                             onChange={() => setFieldValue(field.name, option)}
+                             className="form-checkbox"
+                           />
+                           {option}
+                         </label>
+                     ))}
+                   </div>;
         default:
             return <div style={{"background-color": "pink"}}>DEFAULT { field.name } DEFAULT</div>;
         }
     };
 
-    return <form className="w-full max-w-lg space-y-6">
+    return <form onSubmit={submit} className="w-full max-w-lg space-y-6">
              {formData.fields.map(field => (
                  <div key={field.name} className="space-y-2">
                    <label>{field.label}</label>
                    {renderField(field)}
+                   {errors[field.name] && (
+                       <p className="text-red-500 text-sm">{errors[field.name]}</p>
+                   )}
                  </div>
              ))}
              <button type="submit">Submit</button>
