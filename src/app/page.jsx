@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from "next/image";
 import FormBuilder from "./modules/formBuilder/formBuilder";
